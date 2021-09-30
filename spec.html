@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head itemscope="itemscope" itemtype="https://imfug.com/pub">
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://static.imfug.com/pub/css/main.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://static.imfug.com/pub/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://static.imfug.com/pub/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://static.imfug.com/pub/favicon/favicon-16x16.png">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://static.imfug.com/pub/script/render.js"></script>
+  <title>IMFUG BP 005</title>
+</head>
+
+<body>
+
+  <header class="unnumbered" id="sec-front-matter">
+    <table>
+      <tr>
+        <td colspan="2" id="doc-designator" itemtype="http://purl.org/dc/elements/1.1/">
+          <span itemprop="publisher">IMF UG</span> <span id="doc-type">BP</span> <span id="doc-number">005</span></span>
+        </td>
+      </tr>
+      <tr>
+        <td id="header-logo">
+          <img src="https://static.imfug.com/pub/img/hpa-logo.png" />
+        </td>
+        <td id="header-title">
+
+          <div id="long-doc-type">IMF User Group Best Practice</div>
+          <h1>IMF HTTP Absolute Map Profile</h1>
+          <div><span id="doc-status">Draft</span><!-- Draft, Published --> <time id="doc-pubdate"
+              datetime="2021-08-05"></time><!-- date published in this format-->
+          </div>
+          <div>Issue tracking: <a id="doc-issues"
+              href="https://github.com/imfug/005-absolute-map-profile/issues">https://github.com/imfug/005-absolute-map-profile/issues</a>
+          </div>
+        </td>
+      <tr>
+    </table>
+  </header>
+
+  <section class="unnumbered" id='sec-scope'>
+    <h2>Scope</h2>
+    <p>This document extends the IMF HTTP Map Profile specified in <a href="#bib-st2067-2-2020">SMPTE ST 2067-2</a> with
+      support for both absolute
+      and relative HTTP and HTTPS URIs.</p>
+  </section>
+
+  <section class="unnumbered" id="sec-sotd">
+    <h2>Status of this document</h2>
+
+    <!-- do not modify this -->
+
+    <p>This Best Practice is published by the <a href="https://www.imfug.com">IMF User Group</a>. It may be updated,
+      replaced or
+      obsoleted by other documents at any time. Readers are encouraged to consult and contribute to the <a
+        href="#doc-issues">issue
+        tracker</a>, which lists outstanding issues against the document.</p>
+    <p id="copyright-notice">©Hollywood Professional Association. Licensed under the
+      <a href="https://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0
+        International License</a>.
+    </p>
+  </section>
+
+  <section class="unnumbered" id="sec-background">
+    <h2>Introduction</h2>
+    <p>The IMF HTTP Map Profile specified in <a href="#bib-st2067-2-2020">SMPTE ST 2067-2</a> requires that the location of all
+    assets be relative to the location of the <code>ASSETMAP.xml</code> document. The IMF HTTP Map Profile is therefore incompatible
+    with scenarios where assets are located on one host and the <code>ASSETMAP.xml</code> document is available through a REST API
+    on another host.</p>
+
+    <p>This document defines an IMF HTTP Absolute Map Profile that extends the IMF HTTP Map Profile and allows the
+      location of each
+      asset to be either relative to the <code>ASSETMAP.xml</code> document or absolute.</p>
+  </section>
+
+  <section class="unnumbered" id="sec-references">
+    <h2>References</h2>
+    <ul>
+      <li><cite id="bib-st2067-2-2020"><a href="https://doi.org/10.5594/SMPTE.ST2067-2.2020">SMPTE ST
+            2067-2:2020</a></cite>, Interoperable Master Format — Core Constraints</li>
+    </ul>
+  </section>
+
+  <section id="sec-location-encoding">
+    <h2>Asset Map Location and Encoding</h2>
+
+    <p>The Asset Map document shall be retrieved from an absolute-URI (the Asset Map URI) that conforms to the
+      following:</p>
+    <ul>
+      <li>the scheme shall be <code>"http"</code> or <code>"https"</code>; and</li>
+      <li>no fragment component shall be present.</li>
+    </ul>
+
+    <p>The Asset Map document shall be encoded using the UTF-8 encoding as specified in W3C Extensible Markup Language
+      1.0</p>
+
+    <p class="note" id="note-location-encoding-1">The last path segment of the Asset Map URI need not be equal
+      to "ASSETMAP.xml".</p>
+
+    <p class="note" id="note-location-encoding-2">The API that exposes the Asset Map URI is outside the scope of this
+      specification.</p>
+
+    <p class="note" id="note-location-encoding-3">The query components in the Asset Map URI are not constrained by this
+      specification.</p>
+
+  </section>
+
+  <section id="sec-location-constraints">
+    <h2>Asset Location and Path Constraints</h2>
+
+    <p>Each Path element of the Asset Map shall be either:</p>
+
+    <ul>
+      <li>an absolute-URI; or</li>
+      <li>a relative-path reference.</li>
+    </ul>
+
+    <p class="example" id="ex-location-constraints-1"><code>https://example.com/api/v1/deliveries/3660f730-6f17-4902-a0d9-bdde0a831006/cpl</code></p>
+
+    <p class="example" id="ex-location-constraints-2"><code>cpl</code></p>
+
+    <p>
+      If the Path element is a relative-path reference, the absolute-URI of the Asset shall be constructed by resolving, as
+      specified in RFC 3986, its Path element relative to the Asset Map URI. A Path element shall not contain any fragment
+      component.
+    </p>
+
+    <p>No two Path elements in an Asset Map shall have identical values, regardless of case.</p>
+
+    <p class="note" id="note-location-encoding-1">The Asset URI can contain query components and need not include a file extension.</p>
+    
+  </section>
+
+  <section id="sec-retrieving-resources">
+    <h2>Retrieving Resources</h2>
+
+    <p>The resources identified by a URI using the <code>"http"</code> or <code>"https"</code> schemes shall be retrieved as the response to a GET request to the URI.</p>
+
+    <p class="note" id="note-retrieving-resources-1">The Asset URI can contain query components and need not include a file extension.</p>
+    
+  </section>
+
+</body>
+
+</html>
